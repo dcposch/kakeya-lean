@@ -1,0 +1,26 @@
+name = "Kakeya"
+version = "0.1.0"
+defaultTargets = ["Challenge", "Solution"]
+
+[leanOptions]
+pp.unicode.fun = true
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "f9a332347e7f482b880a832c43f1cb32206f9bf2"
+
+[[require]]
+name = "KakeyaFiniteFields"
+git = "https://github.com/math-inc/KakeyaFiniteFields.git"
+rev = "3f514e300d49578bee607917e7214988bd8d71b4"
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]

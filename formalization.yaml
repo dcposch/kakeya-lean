@@ -1,0 +1,135 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4
+version: "v0.4"
+
+project:
+  name: "Finite-field Kakeya (Dvir)"
+  description: >-
+    A Palomar thin wrapper around Math Inc’s Lean 4 formalization of Dvir’s
+    finite-field Kakeya theorem: for each dimension n there is a positive
+    constant C, depending only on n, such that every Kakeya set K in F^n,
+    with F a finite field of cardinality q, satisfies |K| ≥ C · q^n. A Kakeya
+    set is a subset that contains an affine line in every direction. The
+    compared declaration is Kakeya.kakeya_set_bound; the proof is discharged
+    from KakeyaFiniteFields.kakeya_set_bound in math-inc/KakeyaFiniteFields.
+  authors:
+    - "Dan Clemens Posch"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Dan Clemens Posch"
+
+repository:
+  role: thin-wrapper
+  substantive_formalization:
+    id: "math-inc/KakeyaFiniteFields"
+    revision: "3f514e300d49578bee607917e7214988bd8d71b4"
+
+classification:
+  arxiv: ["math.CO", "math.CA"]
+  msc2020: ["52C17", "05B25"]
+
+sources:
+  - title: "On the size of Kakeya sets in finite fields"
+    authors:
+      - "Zeev Dvir"
+    id: "doi:10.1090/S0894-0347-08-00607-3"
+    type: "article"
+    location: "J. Amer. Math. Soc. 22 (2009), 1093–1097; arXiv:0803.2336"
+    relationship: "adapts"
+    note: >-
+      Headline theorem: a Kakeya set K ⊆ F_q^n has |K| ≥ C_n · q^n with
+      C_n > 0 depending only on n. The Lean development follows Dvir’s
+      polynomial method (vanishing polynomials of degree at most q−1,
+      homogeneous components, and a dimension count). It does not formalize
+      the (δ,γ)-Kakeya estimates, the product argument for the n−ε bound,
+      or later multiplicity-method improvements.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+  - title: "Kakeya sets in finite fields"
+    contributors:
+      - name: "Math Inc"
+        role: "substantive Lean 4 formalization"
+      - name: "Gauss"
+        role: "autoformalization agent that produced the Lean statements and proofs"
+    id: "https://github.com/math-inc/KakeyaFiniteFields"
+    type: "formalization"
+    location: "commit 3f514e300d49578bee607917e7214988bd8d71b4"
+    relationship: "other"
+    note: >-
+      Underlying proof development this wrapper exposes to Comparator.
+      The compared theorem is KakeyaFiniteFields.kakeya_set_bound.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/math-inc/KakeyaFiniteFields"
+    relationship: "adapts"
+    note: >-
+      This repository is a Palomar Challenge/Solution wrapper around that
+      development at the pinned commit in repository.substantive_formalization.
+
+status:
+  scope: >-
+    Compared: Kakeya.kakeya_set_bound, the existential form of Dvir’s bound
+    |K| ≥ C_n · q^n for Kakeya sets in F^n over an arbitrary finite field F.
+    Not compared: the explicit constant C_n = 1/n! and the binomial bound
+    |K| ≥ binom(q+n−1, n) used internally; (δ,γ)-Kakeya sets; the Cartesian
+    product argument for |K| ≥ C_{n,ε} q^{n−ε}; and later improvements by
+    the method of multiplicities.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Quot.sound", "Classical.choice"]
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["grok-4.6"]
+      framework: "Grok Build TUI"
+      tool_setup: "Palomar thin wrapper; Challenge/Solution glue around math-inc/KakeyaFiniteFields; local lake verify"
+      cost:
+        wall_time: "one session"
+        spend_usd: "not tracked"
+        hardware: "local machine"
+      prompting_notes: "Thin-wrap Dvir finite-field Kakeya; Mathlib-only Challenge; exact/simpa glue in Solution"
+  spend_usd: "not tracked"
+  notes: >-
+    This repository is a thin Comparator wrapper. The mathematical proof is
+    the Math Inc / Gauss formalization in math-inc/KakeyaFiniteFields, produced
+    from a LaTeX blueprint. The wrapper restates IsKakeyaSet and
+    kakeya_set_bound in namespace Kakeya and discharges the theorem from
+    KakeyaFiniteFields.kakeya_set_bound.
+
+fidelity:
+  divergences: >-
+    The compared statement is Dvir’s existential C_n form, not the explicit
+    binomial lower bound proved in the source. Directions in IsKakeyaSet range
+    over all vectors in F^n, including zero; the zero direction only requires
+    K nonempty, which already follows from the existence of a line in a
+    nonzero direction, so this matches the usual definition. Ambient spaces
+    are Fin n → F with F any Field + Fintype, rather than a constructed F_q.
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "none"
+  notes: >-
+    Statement surface copied from KakeyaFiniteFields.kakeya_set_bound /
+    IsKakeyaSet and checked against Dvir, JAMS 22 (2009). No external
+    referee review of the wrapper.
+
+alignment:
+  namespace: "Kakeya"
+  statements:
+    - source: "Dvir, J. Amer. Math. Soc. 22 (2009), main theorem; KakeyaFiniteFields.kakeya_set_bound"
+      lean: "Kakeya.kakeya_set_bound"
+      module: "Challenge"
+      status: "proved"
+      note: >-
+        Discharged from KakeyaFiniteFields.kakeya_set_bound by unfolding the
+        identically defined IsKakeyaSet. Challenge does not import the
+        upstream library.
+
+acknowledgements: >-
+  Mathlib; Math Inc and the Gauss autoformalization agent for
+  math-inc/KakeyaFiniteFields; Zeev Dvir, On the size of Kakeya sets in
+  finite fields, J. Amer. Math. Soc. 22 (2009); Palomar template.

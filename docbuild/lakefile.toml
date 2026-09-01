@@ -1,0 +1,14 @@
+name = "docbuild"
+version = "0.1.0"
+reservoir = false
+packagesDir = "../.lake/packages"
+
+[[require]]
+scope = "leanprover"
+name = "doc-gen4"
+git = "https://github.com/leanprover/doc-gen4.git"
+rev = "2679356b3372d52f76d6d984eef16cade7956e0c"
+
+[[require]]
+name = "Kakeya"
+path = "../"
